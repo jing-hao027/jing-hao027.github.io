@@ -12,6 +12,8 @@ if not exist "..\.tools\hugo\hugo.exe" (
   exit /b 1
 )
 
+set "HUGO_CACHEDIR=%~dp0.cache"
+
 echo.
 echo 正在生成网站……
 ..\.tools\hugo\hugo.exe --gc --minify --cleanDestinationDir

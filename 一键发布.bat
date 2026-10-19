@@ -12,6 +12,8 @@ if not exist "..\.tools\hugo\hugo.exe" (
   exit /b 1
 )
 
+set "HUGO_CACHEDIR=%~dp0.cache"
+
 echo.
 echo [1/3] 正在生成网站……
 ..\.tools\hugo\hugo.exe --gc --minify --cleanDestinationDir
@@ -32,7 +34,7 @@ if errorlevel 1 (
   echo.
   echo [失败] 推送失败。常见原因：
   echo   1. 还没设置远程仓库，请看「发布指南.md」第 2 步
-  echo   2. 网络问题，稍后再试一次
+  echo   2. VPN 没开（本仓库走 127.0.0.1:7890 代理），连不上 GitHub
   pause
   exit /b 1
 )

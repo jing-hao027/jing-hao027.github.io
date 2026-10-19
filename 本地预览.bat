@@ -4,7 +4,6 @@ cd /d "%~dp0"
 rem ============================================
 rem  双击这个文件即可在本地预览网站
 rem  预览期间这个黑窗口不要关；关闭窗口即结束
-rem  注意：预览只在内存里渲染，不会改动 docs 文件夹
 rem ============================================
 
 if not exist "..\.tools\hugo\hugo.exe" (
@@ -13,6 +12,9 @@ if not exist "..\.tools\hugo\hugo.exe" (
   pause
   exit /b 1
 )
+
+rem 把 Hugo 缓存放在项目内，避免系统临时目录权限问题导致启动失败
+set "HUGO_CACHEDIR=%~dp0.cache"
 
 echo.
 echo 正在启动本地预览，几秒后会自动打开浏览器……
