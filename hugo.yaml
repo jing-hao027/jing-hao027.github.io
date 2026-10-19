@@ -3,7 +3,7 @@
 # ============================================================
 
 # 你的最终网址。绑定域名后改这里，例如 https://www.yourdomain.com/
-baseURL: "https://jinghao027.github.io/"
+baseURL: "https://jing-hao027.github.io/"
 
 # 网站标题（显示在浏览器标签和页眉）
 title: "我的个人网站"
@@ -24,10 +24,10 @@ pagination:
 
 params:
   # 首页大标题和副标题（把 [你的名字] 换成你的名字或昵称）
-  homeTitle: "你好，我是 jinghao027"
+  homeTitle: "你好，我是 jing-hao027"
   homeSubtitle: "记录作品、文章与生活的地方"
   # 页脚版权
-  copyright: "© 2026 jinghao027"
+  copyright: "© 2026 jing-hao027"
   # 侧边栏自我介绍
   bio: "这里写一段关于你自己的介绍，两三句话即可。比如：喜欢写代码、听音乐、偶尔拍点照片。"
   # 导航栏：name 是显示文字，url 是链接

@@ -38,5 +38,5 @@ if errorlevel 1 (
 )
 
 echo.
-echo [完成] 大约 1 分钟后网站更新，打开 https://jinghao027.github.io 看看。
+echo [完成] 大约 1 分钟后网站更新，打开 https://jing-hao027.github.io 看看。
 pause
