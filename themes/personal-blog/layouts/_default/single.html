@@ -1,0 +1,59 @@
+{{ define "main" }}
+<div class="container">
+  <div class="page-body">
+    {{- if .IsPage }}
+
+      <div class="article-header">
+        <h1>{{ .Title }}</h1>
+        {{- if eq .Section "posts" }}
+        <div class="meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+          {{- range .Params.tags }}
+            <a class="tag" href="{{ (printf "/tags/%s/" (urlize .)) | relURL }}">{{ . }}</a>
+          {{- end }}
+        </div>
+        {{- end }}
+      </div>
+
+      {{- /* 照片页：把文章文件夹里的图片全部显示出来 */ -}}
+      {{- $images := .Resources.ByType "image" }}
+      {{- if and (eq .Section "photos") $images }}
+      <div class="photo-grid" style="margin-bottom:28px;">
+        {{- range $images }}
+        <figure><img src="{{ .RelPermalink }}" alt="{{ $.Title }}" loading="lazy"></figure>
+        {{- end }}
+      </div>
+      {{- end }}
+
+      <div class="prose" style="max-width:820px;">
+        {{ .Content }}
+      </div>
+
+      {{- /* 音乐页：渲染播放器 */ -}}
+      {{- with .Params.audio }}
+      <div class="audio-block" style="margin-top:28px;max-width:820px;">
+        <div class="audio-title">🎵 {{ $.Params.audio_title | default "试听" }}</div>
+        <audio controls preload="none" src="{{ . | relURL }}"></audio>
+      </div>
+      {{- end }}
+
+      {{- with .Params.video }}
+      <div class="embed-16x9" style="margin-top:28px;max-width:820px;">
+        <iframe src="{{ . }}" title="{{ $.Title }}" allowfullscreen loading="lazy"></iframe>
+      </div>
+      {{- end }}
+
+      <p style="margin-top:48px;"><a href="{{ .CurrentSection.RelPermalink }}">← 返回「{{ .CurrentSection.Title }}」</a></p>
+
+    {{- else }}
+
+      {{- /* 关于 / 联系 这类独立页面 */ -}}
+      <div class="prose" style="max-width:760px;">
+        <h1 style="margin-top:0;">{{ .Title }}</h1>
+        {{ .Content }}
+      </div>
+
+    {{- end }}
+  </div>
+</div>
+{{ end }}

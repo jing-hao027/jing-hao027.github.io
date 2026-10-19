@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="container">
+  <div class="page-body">
+    {{- /* 如果这个栏目的 _index.md 里写了 layout: "page"，
+           就当成一个普通单页面渲染（适合「关于我」「联系我」）。 */ -}}
+    {{- if eq (.Params.layout | default "") "page" }}
+      <div class="list-header">
+        <h1>{{ .Title }}</h1>
+      </div>
+      <div class="prose" style="max-width:760px;">
+        {{ .Content }}
+      </div>
+    {{- else }}
+      {{ partial "list-body.html" . }}
+    {{- end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,5 @@
+{{- /* 图片并排： {{< figure src="images/a.jpg" caption="说明" >}} */ -}}
+<figure>
+  <img src="{{ .Get "src" | relURL }}" alt="{{ .Get "caption" | default .Get "src" }}" loading="lazy">
+  {{- with .Get "caption" }}<figcaption style="color:var(--text-soft);font-size:14px;text-align:center;">{{ . }}</figcaption>{{ end }}
+</figure>

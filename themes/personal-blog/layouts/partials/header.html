@@ -1,0 +1,20 @@
+{{- /* 顶部导航栏 */ -}}
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href="{{ .Site.Home.RelPermalink }}">{{ site.Title }}</a>
+    <nav>
+      <ul class="nav">
+        {{- range site.Params.nav }}
+          {{- $url := .url }}
+          {{- $isActive := false }}
+          {{- if eq $url "/" }}
+            {{- $isActive = $.IsHome }}
+          {{- else if hasPrefix $.RelPermalink $url }}
+            {{- $isActive = true }}
+          {{- end }}
+          <li><a href="{{ $url | relURL }}"{{ if $isActive }} class="active"{{ end }}>{{ .name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+</header>

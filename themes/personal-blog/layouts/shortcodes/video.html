@@ -1,0 +1,4 @@
+{{- /* 视频嵌入： {{< video src="https://..." >}} ，支持 B 站/YouTube iframe 地址 */ -}}
+<div class="embed-16x9">
+  <iframe src="{{ .Get "src" }}" title="{{ .Get "title" | default "视频" }}" allowfullscreen loading="lazy"></iframe>
+</div>

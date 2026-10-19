@@ -1,0 +1,49 @@
+{{ define "main" }}
+<section class="hero">
+  <h1>{{ site.Params.homeTitle }}</h1>
+  <p>{{ site.Params.homeSubtitle }}</p>
+</section>
+
+<div class="section-grid">
+  <a class="section-card" href="{{ "posts/" | relURL }}">
+    <h3>📝 文章</h3>
+    <p>技术笔记、随笔与思考</p>
+  </a>
+  <a class="section-card" href="{{ "works/" | relURL }}">
+    <h3>🧩 作品</h3>
+    <p>做过的项目和小玩意儿</p>
+  </a>
+  <a class="section-card" href="{{ "music/" | relURL }}">
+    <h3>🎵 音乐</h3>
+    <p>喜欢的歌与歌单</p>
+  </a>
+  <a class="section-card" href="{{ "photos/" | relURL }}">
+    <h3>📷 照片</h3>
+    <p>生活里的瞬间</p>
+  </a>
+</div>
+
+<div class="container">
+  {{- $posts := where site.RegularPages "Section" "posts" }}
+  {{- with $posts }}
+  <section>
+    <h2 style="font-size:22px;margin:0 0 4px;">最新文章</h2>
+    <ul class="post-list">
+      {{- range first 5 . }}
+      <li class="post-item">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <div class="meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+          {{- range .Params.tags }}
+            <a class="tag" href="{{ (printf "/tags/%s/" (urlize .)) | relURL }}">{{ . }}</a>
+          {{- end }}
+        </div>
+        <p class="summary">{{ .Summary | plainify | truncate 160 }}</p>
+      </li>
+      {{- end }}
+    </ul>
+    <p style="margin-top:20px;"><a href="{{ "posts/" | relURL }}">查看全部文章 →</a></p>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

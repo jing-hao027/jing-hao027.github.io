@@ -1,0 +1,126 @@
+{{ define "main" }}
+<div class="container">
+  <div class="page-body">
+    <div class="list-header">
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      {{ with .Content }}{{ . }}{{ end }}
+    </div>
+
+    {{- if eq .Section "music" }}
+
+      {{- /* ===== 音乐栏目 ===== */ -}}
+      {{- $paginator := .Paginate .RegularPages }}
+      {{- if $paginator.Pages }}
+        {{- range $paginator.Pages }}
+        <article class="post-item">
+          <h2 style="font-size:19px;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <div class="meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+            {{- range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+          </div>
+          {{ .Content }}
+        </article>
+        {{- end }}
+      {{- else }}
+        <p class="empty">还没有添加音乐。在 content/music/ 里新建一个 .md 文件即可。</p>
+      {{- end }}
+
+    {{- else if eq .Section "photos" }}
+
+      {{- /* ===== 照片栏目 ===== */ -}}
+      {{- if .RegularPages }}
+      <div class="photo-grid">
+        {{- range .RegularPages }}
+        <figure>
+          <a href="{{ .RelPermalink }}">
+            {{- $img := "" }}
+            {{- with .Params.cover }}{{ $img = . | relURL }}{{ end }}
+            {{- if not $img }}
+              {{- with .Resources.GetMatch "*.jpg" }}{{ $img = .RelPermalink }}{{ end }}
+              {{- with .Resources.GetMatch "*.jpeg" }}{{ $img = .RelPermalink }}{{ end }}
+              {{- with .Resources.GetMatch "*.png" }}{{ $img = .RelPermalink }}{{ end }}
+              {{- with .Resources.GetMatch "*.webp" }}{{ $img = .RelPermalink }}{{ end }}
+            {{- end }}
+            {{- if $img }}
+              <img src="{{ $img }}" alt="{{ .Title }}" loading="lazy">
+            {{- else }}
+              <div style="height:200px;display:flex;align-items:center;justify-content:center;color:var(--text-soft);">{{ .Title }}</div>
+            {{- end }}
+          </a>
+          <figcaption><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Date }} · {{ .Format "2006-01-02" }}{{ end }}</figcaption>
+        </figure>
+        {{- end }}
+      </div>
+      {{- else }}
+        <p class="empty">还没有照片。在 content/photos/ 里新建一个文件夹，放入图片即可。</p>
+      {{- end }}
+
+    {{- else if eq .Section "works" }}
+
+      {{- /* ===== 作品栏目 ===== */ -}}
+      {{- if .RegularPages }}
+      <div class="work-grid">
+        {{- range .RegularPages }}
+        <article class="work-card">
+          <a href="{{ .RelPermalink }}">
+            <div class="cover">
+              {{ with .Params.cover }}<img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">{{ else }}{{ .Title }}{{ end }}
+            </div>
+          </a>
+          <div class="body">
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 100 }}{{ end }}</p>
+            <div class="links">
+              {{ range .Params.tags }}<span class="tag" style="margin-right:6px;">{{ . }}</span>{{ end }}
+              {{ with .Params.link }}<a href="{{ . }}" target="_blank" rel="noopener">查看 →</a>{{ end }}
+            </div>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+      {{- else }}
+        <p class="empty">还没有作品。在 content/works/ 里新建一个 .md 文件即可。</p>
+      {{- end }}
+
+    {{- else }}
+
+      {{- /* ===== 普通文章列表（带分页） ===== */ -}}
+      {{- $paginator := .Paginate .RegularPages }}
+      {{- if $paginator.Pages }}
+      <ul class="post-list">
+        {{- range $paginator.Pages }}
+        <li class="post-item">
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <div class="meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年01月02日" }}</time>
+            {{- range .Params.tags }}
+              <a class="tag" href="{{ (printf "/tags/%s/" (urlize .)) | relURL }}">{{ . }}</a>
+            {{- end }}
+          </div>
+          <p class="summary">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}</p>
+        </li>
+        {{- end }}
+      </ul>
+      {{- else }}
+        <p class="empty">这里还没有内容，期待你的第一篇。</p>
+      {{- end }}
+
+      {{- if gt $paginator.TotalPages 1 }}
+      <nav class="pagination">
+        {{- with $paginator.Prev }}<a href="{{ .URL }}">← 上一页</a>{{ end }}
+        {{- range $paginator.Pagers }}
+          {{- if eq .PageNumber $paginator.PageNumber }}
+            <span class="current">{{ .PageNumber }}</span>
+          {{- else }}
+            <a href="{{ .URL }}">{{ .PageNumber }}</a>
+          {{- end }}
+        {{- end }}
+        {{- with $paginator.Next }}<a href="{{ .URL }}">下一页 →</a>{{ end }}
+      </nav>
+      {{- end }}
+
+    {{- end }}
+  </div>
+</div>
+{{ end }}

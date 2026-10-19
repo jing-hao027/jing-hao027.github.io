@@ -1,0 +1,7 @@
+{{- /* 音频播放器： {{< audio src="音乐.mp3" title="歌名" >}} */ -}}
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" | default "试听" -}}
+<div class="audio-block">
+  <div class="audio-title">🎵 {{ $title }}</div>
+  <audio controls preload="none" src="{{ $src | relURL }}"></audio>
+</div>
