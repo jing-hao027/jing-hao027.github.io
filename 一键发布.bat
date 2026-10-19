@@ -14,7 +14,7 @@ if not exist "..\.tools\hugo\hugo.exe" (
 
 echo.
 echo [1/3] 正在生成网站……
-..\.tools\hugo\hugo.exe --gc --minify
+..\.tools\hugo\hugo.exe --gc --minify --cleanDestinationDir
 if errorlevel 1 (
   echo [失败] 生成出错，请把上面的报错信息发给我。
   pause

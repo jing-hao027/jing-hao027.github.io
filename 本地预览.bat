@@ -4,6 +4,7 @@ cd /d "%~dp0"
 rem ============================================
 rem  双击这个文件即可在本地预览网站
 rem  预览期间这个黑窗口不要关；关闭窗口即结束
+rem  注意：预览只在内存里渲染，不会改动 docs 文件夹
 rem ============================================
 
 if not exist "..\.tools\hugo\hugo.exe" (
@@ -20,6 +21,6 @@ echo 看完后关掉这个窗口即可。
 echo.
 
 start "" "http://localhost:1313"
-..\.tools\hugo\hugo.exe server --port 1313 --bind 127.0.0.1 --buildDrafts
+..\.tools\hugo\hugo.exe server --port 1313 --bind 127.0.0.1 --buildDrafts --renderToMemory
 
 pause
