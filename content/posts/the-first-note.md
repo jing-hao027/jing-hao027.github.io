@@ -23,6 +23,5 @@ summary: "这是我的博客的第一篇文章"
 再次感谢大家的阅读
 
 **害怕愚蠢便一事无成**
-```markdown
-![/images/tachikoma.jpg]
-```
+
+![塔奇克马](/images/tachikoma.jpg)
